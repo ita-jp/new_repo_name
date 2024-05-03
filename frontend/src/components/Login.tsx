@@ -1,6 +1,7 @@
 import {Button, Form} from "react-bootstrap";
 import React, {useState} from "react";
-import {redirect, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../contexts/AuthContext";
 
 
 interface CsrfResponse {
@@ -14,6 +15,8 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const authContext = useAuth();
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -39,7 +42,7 @@ const Login = () => {
             if (response.status === 401) {
                 setError('ユーザー名またはパスワードが違います');
             } else {
-                setError('');
+                authContext.login(username);
                 navigate("/");
             }
         } catch (error) {
