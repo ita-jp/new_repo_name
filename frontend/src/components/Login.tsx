@@ -1,5 +1,6 @@
 import {Button, Form} from "react-bootstrap";
 import React, {useState} from "react";
+import {redirect, useNavigate} from "react-router-dom";
 
 
 interface CsrfResponse {
@@ -12,6 +13,7 @@ const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('');
+    const navigate = useNavigate();
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -38,6 +40,7 @@ const Login = () => {
                 setError('ユーザー名またはパスワードが違います');
             } else {
                 setError('');
+                navigate("/");
             }
         } catch (error) {
             console.error('Error logging in:', error);
