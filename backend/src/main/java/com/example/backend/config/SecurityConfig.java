@@ -19,7 +19,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/csrf").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults());
+                .formLogin(formLogin -> formLogin
+                        .loginProcessingUrl("/api/login")
+                        .successHandler((request, response, authentication) -> response.setStatus(200))
+                        .failureHandler((request, response, authentication) -> response.setStatus(401))
+                        .permitAll()
+                );
 
         return http.build();
     }
