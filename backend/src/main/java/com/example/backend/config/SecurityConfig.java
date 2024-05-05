@@ -24,6 +24,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
+                        // TODO stop /login page
                         .loginProcessingUrl("/api/login")
                         .successHandler((request, response, authentication) -> response.setStatus(200))
                         .failureHandler((request, response, authentication) -> response.setStatus(401))
