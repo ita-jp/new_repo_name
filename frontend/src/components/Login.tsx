@@ -29,12 +29,14 @@ const Login = () => {
         const formData = new FormData();
         formData.append('username', username);
         formData.append('password', password);
-        formData.append(csrfJson.parameterName, csrfJson.token);
 
         try {
             const response = await fetch('http://localhost:8080/api/login', {
                 method: 'POST',
                 body: formData,
+                headers: {
+                    [csrfJson.headerName]: csrfJson.token,
+                },
                 credentials: 'include',
             });
             console.log(response);
