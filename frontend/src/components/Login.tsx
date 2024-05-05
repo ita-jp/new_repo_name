@@ -11,7 +11,7 @@ interface CsrfResponse {
 }
 
 const Login = () => {
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Login = () => {
         const csrfJson: CsrfResponse = await csrfResponse.json();
 
         const formData = new FormData();
-        formData.append('username', username);
+        formData.append('username', email);
         formData.append('password', password);
 
         try {
@@ -44,7 +44,7 @@ const Login = () => {
             if (response.status === 401) {
                 setError('ユーザー名またはパスワードが違います');
             } else {
-                authContext.login(username);
+                authContext.login(email);
                 navigate("/");
             }
         } catch (error) {
@@ -59,11 +59,11 @@ const Login = () => {
             <Form onSubmit={e => handleSubmit(e)}>
                 <Form.Group className="mb-3">
                     <Form.Control
-                        type="username"
-                        placeholder="ユーザー名"
-                        value={username}
+                        type="text"
+                        placeholder="メールアドレス"
+                        value={email}
                         onChange={e => {
-                            setUsername(e.target.value)
+                            setEmail(e.target.value)
                         }}
                     />
                 </Form.Group>
