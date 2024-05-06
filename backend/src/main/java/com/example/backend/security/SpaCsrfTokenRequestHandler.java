@@ -15,19 +15,13 @@ import java.util.function.Supplier;
  */
 public final class SpaCsrfTokenRequestHandler extends CsrfTokenRequestAttributeHandler {
     private final CsrfTokenRequestHandler delegate = new XorCsrfTokenRequestAttributeHandler();
-    private final String csrfTokenProviderPath;
-
-    public SpaCsrfTokenRequestHandler(String csrfTokenProviderPath) {
-        super();
-        this.csrfTokenProviderPath = csrfTokenProviderPath;
-    }
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, Supplier<CsrfToken> csrfToken) {
-        if (request.getRequestURI().equals(this.csrfTokenProviderPath)) {
-            super.handle(request, response, csrfToken);
-            return;
-        }
+        /*
+         * Always use XorCsrfTokenRequestAttributeHandler to provide BREACH protection of
+         * the CsrfToken when it is rendered in the response body.
+         */
         this.delegate.handle(request, response, csrfToken);
     }
 

@@ -17,7 +17,7 @@ public class BackendApplication {
     @Bean
     public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
-            repository.save(new User(1L, "user1@example.com", "password", "user1", true));
+            repository.save(new User(1L, "user1@example.com", "{noop}password", "user1", true));
         };
     }
 }

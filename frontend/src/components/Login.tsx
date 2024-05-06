@@ -2,13 +2,7 @@ import {Button, Form} from "react-bootstrap";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../contexts/AuthContext";
-
-
-interface CsrfResponse {
-    token: string;
-    headerName: string;
-    parameterName: string;
-}
+import {userService} from "../api/userService";
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -20,36 +14,14 @@ const Login = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const csrfResponse = await fetch('http://localhost:8080/api/csrf', {
-            method: 'GET',
-            credentials: 'include',
+        userService.login({username: email, password: password}).then(() => {
+            authContext.login(email);
+            navigate("/");
+        }).catch((error) => {
+            // TODO error message
+            // TODO 401, 403 (csrf), 5xx
+            setError(error.message);
         });
-        const csrfJson: CsrfResponse = await csrfResponse.json();
-
-        const formData = new FormData();
-        formData.append('username', email);
-        formData.append('password', password);
-
-        try {
-            const response = await fetch('http://localhost:8080/api/login', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    [csrfJson.headerName]: csrfJson.token,
-                },
-                credentials: 'include',
-            });
-            console.log(response);
-
-            if (response.status === 401) {
-                setError('ユーザー名またはパスワードが違います');
-            } else {
-                authContext.login(email);
-                navigate("/");
-            }
-        } catch (error) {
-            console.error('Error logging in:', error);
-        }
     }
 
     return (

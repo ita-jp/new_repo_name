@@ -25,3 +25,7 @@ function App() {
 }
 
 export default App;
+
+// TODO: WARNING in ./node_modules/@react-aria/ssr/dist/SSRProvider.mjs
+// Module Warning (from ./node_modules/source-map-loader/dist/cjs.js):
+// Failed to parse source map from '/Users/i/ghq/github.com/ita-jp/spring-react-integration-cookie/frontend/node_modules/@react-aria/ssr/dist/SSRProvider.mjs.map' file: Error: ENOENT: no such file or directory, open '/Users/i/ghq/github.com/ita-jp/spring-react-integration-cookie/frontend/node_modules/@react-aria/ssr/dist/SSRProvider.mjs.map'
