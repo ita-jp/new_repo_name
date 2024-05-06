@@ -26,7 +26,7 @@ const Login = () => {
 
     return (
         <div>
-            <h1 className="mb-3">ログイン</h1>
+            <h1 className="mt-3">ログイン</h1>
             <p className="text-danger">{error}</p>
             <Form onSubmit={e => handleSubmit(e)}>
                 <Form.Group className="mb-3">
