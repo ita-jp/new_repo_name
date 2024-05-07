@@ -50,5 +50,18 @@ export const userService = {
                 throw new Error('Network error');
             }
         }
+    },
+
+    logout: async (): Promise<any> => {
+        try {
+            const response = await api.post('/api/logout');
+            return response.data;
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                throw new Error(error.response.data.message || 'Logout failed');
+            } else {
+                throw new Error('Network error');
+            }
+        }
     }
 };

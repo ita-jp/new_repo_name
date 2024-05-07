@@ -21,6 +21,7 @@ const Layout = () => {
                             <Nav.Link as={Link} to="/">Home</Nav.Link>
                             { !username && <Nav.Link as={Link} to="/login">Login</Nav.Link> }
                             { !username && <Nav.Link as={Link} to="/register">Register</Nav.Link> }
+                            { username && <Nav.Link as={Link} to="/logout">Logout</Nav.Link> }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
