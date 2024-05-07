@@ -18,7 +18,11 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<UserResponse> me(Principal principal) {
-        return ResponseEntity.ok(new UserResponse(principal.getName(), null));
+        // TODO put username on the principal
+        return userService.findByEmail(principal.getName())
+                .map(user -> new UserResponse(user.getEmail(), user.getUsername()))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -20,5 +22,9 @@ public class UserService {
         var encodedPassword = passwordEncoder.encode(rawPassword);
         newUser.setPassword(encodedPassword);
         return userRepository.save(newUser);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return Optional.ofNullable(userRepository.findByEmail(email));
     }
 }

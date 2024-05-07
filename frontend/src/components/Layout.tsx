@@ -4,7 +4,12 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import {useAuth} from "../contexts/AuthContext";
 
 const Layout = () => {
-    const { username } = useAuth();
+    const {username, loading} = useAuth();
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
