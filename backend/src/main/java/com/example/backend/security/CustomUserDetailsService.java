@@ -16,17 +16,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userRepository.findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        return User.builder()
-                // TODO use username column
-                .username(user.getEmail())
-                .password(user.getPassword())
-                .disabled(!user.isEnabled())
-                .build();
-
+        return userRepository.findByEmail(username)
+                .map(user -> User.builder()
+                        // TODO use username column
+                        .username(user.getEmail())
+                        .password(user.getPassword())
+                        .disabled(!user.isEnabled())
+                        .build())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }
