@@ -25,8 +25,6 @@ const Login = () => {
         });
     }
 
-    // TODO logout
-    // TODO prevent session fixation attack
     return (
         <div>
             <h1 className="mt-3">ユーザー登録</h1>
