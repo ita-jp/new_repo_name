@@ -22,13 +22,16 @@ public class LoginController {
 
     @PostMapping("/api/login")
     public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
-        var authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(
+        var authenticationRequest = new UsernamePasswordAuthenticationToken(
                 loginRequest.username(),
                 loginRequest.password()
         );
         try {
             var authentication = authenticationManager.authenticate(authenticationRequest);
             var context = new SecurityContextImpl(authentication);
+
+            request.getSession().invalidate();
+            request.getSession(true);
 
             securityContextRepository.saveContext(context, request, null);
         } catch (AuthenticationException e) {
